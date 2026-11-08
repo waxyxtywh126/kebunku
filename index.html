@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef3ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kebun Teduh">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Kebun Teduh – Panduan Tanam Pemula</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3ec;--sf:#f9fbf7;--sf2:#e2ebdf;--tx:#24372b;--mut:#62776a;--ac:#4f8a63;--ac2:#8fbf9f;--wa:#7fb3c4;--sa:#e9dfc8;--bd:#d3dfd0;--r:22px;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141d18;--sf:#1c2922;--sf2:#26362d;--tx:#e3eee5;--mut:#9fb5a7;--ac:#8fcaa2;--ac2:#4f8a63;--wa:#7fb3c4;--sa:#3a3629;--bd:#2f4136}}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 "Nunito Sans",system-ui,sans-serif;min-height:100vh;
+background-image:radial-gradient(circle at 90% -5%,color-mix(in srgb,var(--wa) 28%,transparent),transparent 45%),radial-gradient(circle at -10% 20%,color-mix(in srgb,var(--ac2) 25%,transparent),transparent 40%)}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.2}
+main{max-width:680px;margin:0 auto;padding:20px 16px}
+.hero{padding:18px 4px 6px}.hero h1{font-size:30px}.hero p{color:var(--mut);margin-top:6px}
+.hill{display:block;width:100%;height:70px;margin:10px 0 4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.crop{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px;text-align:left;color:inherit;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.crop:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--wa);outline-offset:2px}
+.crop:nth-child(3n+1){border-radius:var(--r) 8px var(--r) var(--r)}.crop:nth-child(3n+2){border-radius:8px var(--r) var(--r) var(--r)}
+.ico{width:54px;height:54px;border-radius:50%;background:var(--sf2);display:grid;place-items:center;font-size:30px}
+.crop b{font-family:Fraunces,serif;font-size:18px}.crop small{color:var(--mut)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--sa);color:var(--tx)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-top:12px}
+.back{background:none;border:0;color:var(--ac);font:inherit;font-weight:700;cursor:pointer;padding:8px 0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.facts div{background:var(--sf2);border-radius:16px;padding:10px;text-align:center;font-size:13px;color:var(--mut)}.facts b{display:block;color:var(--tx);font-size:15px}
+.tabs{display:flex;gap:6px;margin-top:14px;overflow-x:auto}
+.tabs button{flex:1;white-space:nowrap;padding:10px 14px;border-radius:99px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font:inherit;font-weight:700;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--ac);color:#fff;border-color:var(--ac)}
+ol,ul{padding-left:22px}li{margin:8px 0}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:99px;padding:12px 20px;font:inherit;font-weight:700;cursor:pointer;width:100%;margin-top:12px}
+.btn.o{background:none;color:var(--ac);border:1px solid var(--ac)}
+input,select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font:inherit;margin-top:8px}
+.bar{height:10px;border-radius:9px;background:var(--sf2);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--wa),var(--ac));border-radius:9px;transition:width .4s}
+.task{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--bd)}
+.task input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--ac);flex:none}
+.task.done span{text-decoration:line-through;color:var(--mut)}.task em{font-style:normal;font-size:12px;color:var(--mut);display:block}
+.late em{color:#b5654a}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.del{background:none;border:0;color:var(--mut);cursor:pointer;font-size:13px;text-decoration:underline}
+.empty{text-align:center;padding:30px 10px;color:var(--mut)}
+nav{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--sf) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--bd);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));gap:6px}
+nav button{flex:1;max-width:160px;background:none;border:0;color:var(--mut);font:inherit;font-size:12px;font-weight:700;padding:6px;border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button[aria-current=page]{color:var(--ac);background:var(--sf2)}nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+details.fx{border-top:1px solid var(--bd);padding:8px 0}details.fx summary{cursor:pointer;font-weight:700;padding:6px 0}details.fx p,details.fx ul{margin:6px 0;font-size:15px}
+.src{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--sf2);margin-left:4px}.src.p{background:var(--sa)}
+a{color:var(--ac)}.note{font-size:13px;color:var(--mut)}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:7px 4px;border-top:1px solid var(--bd);vertical-align:top}
+.sway{display:inline-block;transform-origin:50% 100%;animation:sw 5s ease-in-out infinite}
+@keyframes sw{50%{transform:rotate(6deg)}}@media(prefers-reduced-motion:reduce){.sway{animation:none}.bar i{transition:none}}
+</style></head><body>
+<main id="app"></main>
+<nav aria-label="Menu utama">
+<button data-v="home"><svg viewBox="0 0 24 24"><path d="M12 21V11M12 11C12 7 9 5 5 5c0 4 2 6 7 6zM12 14c0-3 2-5 6-5 0 3-2 5-6 5z"/></svg>Tanaman</button>
+<button data-v="garden"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 20c0-5 3-8 6-8s6 3 6 8M12 12V6m0 0c-2 0-3-1-3-3 2 0 3 1 3 3zm0 0c2 0 3-1 3-3-2 0-3 1-3 3z"/></svg>Kebunku</button>
+<button data-v="pupuk"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 5 6.500 5 9.500a5 5 0 0 1-10 0C7 9.500 9 7 12 3zM9.500 13.500a2.500 2.500 0 0 0 2.500 2.500"/></svg>Pupuk</button>
+<button data-v="tips"><svg viewBox="0 0 24 24"><path d="M12 3c-3.3 0-6 2.5-6 5.7 0 2 1 3.3 2 4.3.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5 1-1 2-2.300 2-4.300C18 5.500 15.300 3 12 3zM10 20h4M10.500 17.500h3"/></svg>Dasar</button>
+</nav>
+<script>
+const C=[
+{id:'selada',n:'Selada',e:'🥬',lv:'Mudah',sun:'4–6 jam',hr:'35–45',sd:14,pn:40,j:'20×20 cm',tg:'Sejuk dan renyah',
+sem:['Isi tray semai dengan tanah, kompos, sekam bakar (1:1:1).','Taburkan benih tipis, tutup tanah setipis 2× ukuran benih.','Semprot kabut halus; taruh di tempat teduh terang. Tumbuh 3–5 hari.','Pindah tanam saat bibit 2–3 daun (±14 hari), pilih sore hari.'],
+rw:['Siram 1–2× sehari (pagi/sore); tanah lembap, tidak becek.','Pupuk cair organik tiap 7–10 hari.','Beri paranet saat siang terik; cabut gulma rutin.'],
+pa:['Daun 8–12 helai, kompak dan segar.','Panen pagi hari: cabut seluruh tanaman atau petik daun luar.','Cuci, tiriskan, simpan di kulkas ±5 hari.'],
+ms:[['Ulat daun','Petik manual pagi hari, semprot air bawang putih.'],['Siput','Taburkan abu sekam di sekeliling tanaman.'],['Daun menguning','Kurang nitrogen atau terlalu basah. Kurangi siram, beri pupuk cair.']],ex:[]},
+{id:'pakcoy',n:'Pakcoy',e:'🥬',lv:'Mudah',sun:'4–6 jam',hr:'30–40',sd:12,pn:35,j:'20×20 cm',tg:'Cepat panen',
+sem:['Gunakan media tanah + kompos (2:1) di tray.','Tabur 2–3 benih per lubang, tutup tipis.','Jaga lembap, berkecambah 2–4 hari.','Pindah tanam umur 12–14 hari, 3–4 daun.'],
+rw:['Siram tiap pagi, jangan sampai kering.','Pupuk cair/kompos tea tiap 7 hari — pakcoy rakus nitrogen.','Tutup dengan jaring halus agar kutu dan ulat tidak masuk.'],
+pa:['Batang gemuk, daun hijau tua, tinggi 20–25 cm.','Potong pangkal batang dengan pisau bersih.','Panen sebelum berbunga agar tidak pahit.'],
+ms:[['Ulat dan kutu daun','Jaring serangga, semprot air sabun encer.'],['Daun berlubang','Biasanya ulat/kumbang: periksa balik daun tiap pagi.'],['Cepat berbunga','Terlalu panas/kering. Beri naungan dan siram teratur.']],ex:[]},
+{id:'seledri',n:'Seledri',e:'🌿',lv:'Sedang',sun:'4–5 jam',hr:'60–90',sd:40,pn:75,j:'25×25 cm',tg:'Sabar tapi awet',
+sem:['Rendam benih semalam; benih seledri sangat kecil dan lambat.','Tabur di permukaan media halus, JANGAN ditimbun tebal (butuh cahaya).','Jaga lembap terus; berkecambah 14–21 hari.','Pindah tanam umur 40–50 hari, 4–5 daun.'],
+rw:['Tanah harus selalu lembap; seledri tidak tahan kering.','Pupuk cair tiap 10 hari.','Boleh di tempat agak teduh; panas penuh membuat batang keras.'],
+pa:['Panen batang luar saat tinggi 25–30 cm.','Potong dari pangkal, sisakan batang tengah agar tumbuh lagi.','Bisa dipanen berkali-kali selama 2–3 bulan.'],
+ms:[['Bibit tak muncul','Benih tertimbun atau kering. Tabur di permukaan dan lembapkan.'],['Daun bercak','Jamur karena basah: siram di pangkal, bukan di daun.'],['Batang pahit','Kurang air atau terlalu panas.']],ex:[]},
+{id:'kangkung',n:'Kangkung',e:'🌱',lv:'Sangat mudah',sun:'5–6 jam',hr:'25–30',sd:0,pn:28,j:'10×10 cm',tg:'Paling ramah pemula',
+sem:['Rendam benih 8–12 jam agar cepat tumbuh.','Tanam langsung (tanpa semai) di bedengan/pot, alur dangkal 1–2 cm.','Tutup tipis, siram lembut.','Tumbuh 2–3 hari; jarangkan bila terlalu rapat.'],
+rw:['Siram 2× sehari; kangkung suka air.','Pupuk cair ringan tiap 7 hari.','Cabut gulma sejak awal.'],
+pa:['Tinggi 20–25 cm, sekitar 25–30 hari.','Potong 5 cm dari tanah: bisa tumbuh lagi, panen 3–4×.','Segera masak; kangkung cepat layu.'],
+ms:[['Ulat daun','Petik manual, semprot air bawang putih.'],['Daun menguning','Tambah pupuk nitrogen/kompos cair.'],['Batang keras','Terlambat panen. Panen saat muda.']],ex:[]},
+{id:'tomat',n:'Tomat',e:'🍅',lv:'Sedang',sun:'6–8 jam',hr:'70–90',sd:25,pn:85,j:'50×60 cm',tg:'Butuh ajir dan sinar',
+sem:['Semai di tray, media tanah + kompos + sekam (1:1:1).','Tabur 1 benih/lubang, tutup 0,5 cm; berkecambah 5–7 hari.','Bibit di tempat terang tapi tidak terik.','Pindah tanam umur 3–4 minggu (4–5 daun), tanam agak dalam.'],
+rw:['Siram pagi, 1× sehari di pangkal; hindari membasahi daun.','Pasang ajir saat 1 minggu setelah tanam; ikat batang longgar.','Wiwil tunas air (di ketiak daun) tiap minggu.','Saat berbunga ganti ke pupuk tinggi kalium (K).'],
+pa:['Panen saat buah merah merata (atau merah 70%).','Petik dengan memutar tangkai.','Panen berkala tiap 2–3 hari.'],
+ms:[['Buah busuk ujung','Kurang kalsium/siram tidak teratur. Siram konsisten, beri cangkang telur halus.'],['Daun bercak/layu','Jamur di musim hujan: pangkas daun bawah, beri atap plastik.'],['Bunga rontok','Terlalu panas/kering atau kurang sinar.']],
+ex:[[32,'Pasang ajir dan ikat batang'],[42,'Wiwil tunas air'],[52,'Ganti ke pupuk tinggi kalium']]},
+{id:'lombok',n:'Lombok',e:'🌶️',lv:'Sedang–sulit',sun:'6–8 jam',hr:'90–120',sd:32,pn:105,j:'50×60 cm',tg:'Panjang tapi berbuah lama',
+sem:['Rendam benih air hangat 4 jam.','Semai di tray; berkecambah lambat 7–14 hari.','Jaga tetap hangat dan lembap, tidak tergenang.','Pindah tanam umur 4–5 minggu (5–6 daun), 2–3 bulan sebelum musim hujan reda lebih baik.'],
+rw:['Siram 1× sehari saat awal, kurangi saat tanaman besar.','Beri mulsa (jerami) agar tanah lembap dan gulma sedikit.','Pasang ajir; bunga pertama boleh dipetik agar tanaman kuat.','Pupuk kalium saat berbunga.'],
+pa:['Panen saat buah merah/mengkilap penuh, 90–120 hari.','Petik dengan tangkai agar awet.','Panen berulang tiap 3–5 hari selama berbulan-bulan.'],
+ms:[['Kutu kebul/thrips','Perangkap kuning, semprot air sabun, buang daun keriting.'],['Antraknosa (busuk buah)','Karena kelembapan tinggi. Beri atap plastik, buang buah sakit.'],['Bunga rontok','Kurang cahaya atau suhu ekstrem.']],
+ex:[[42,'Pasang ajir dan mulsa'],[60,'Beri pupuk tinggi kalium'],[75,'Mulai periksa hama balik daun tiap hari']]},
+{id:'terong',n:'Terong Ungu',e:'🍆',lv:'Sedang',sun:'6–8 jam',hr:'70–90',sd:28,pn:80,j:'60×70 cm',tg:'Tahan dan produktif',
+sem:['Semai di tray, media tanah + kompos + sekam.','Benih direndam 6 jam; tabur 1 per lubang.','Berkecambah 5–10 hari, jaga lembap.','Pindah tanam umur 3–4 minggu (3–4 daun).'],
+rw:['Siram teratur 1× sehari; tahan kering sebentar.','Beri ajir bila tinggi 40 cm.','Pangkas tunas bawah dan daun tua.','Pupuk NPK/organik tiap 10–14 hari.'],
+pa:['Kulit mengkilap, ungu pekat, belum pudar.','Potong tangkai dengan gunting.','Buah terlalu tua jadi keras dan berbiji besar.'],
+ms:[['Kutu daun dan ulat','Semprot air sabun atau neem, petik manual.'],['Layu bakteri','Cabut tanaman sakit, jangan tanam terong/tomat di lahan sama berturut-turut.'],['Buah kecil/pahit','Kurang air atau pupuk.']],
+ex:[[36,'Pasang ajir'],[45,'Pangkas tunas bawah'],[55,'Pupuk NPK']]}];
+const $=s=>document.querySelector(s);let view='home',cur=null,tab=0;
+let G=[];try{G=JSON.parse(localStorage.getItem('kebun')||'[]')}catch(e){}
+const save=()=>{try{localStorage.setItem('kebun',JSON.stringify(G))}catch(e){}};
+const D=864e5,today=()=>new Date(new Date().toDateString());
+const fmt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short'});
+function tasks(c){const t=[[0,c.sd?'Semai benih':'Tanam benih langsung']];
+t.push([c.sd?5:3,'Cek kecambah, jaga media lembap']);
+if(c.sd){t.push([c.sd-3,'Siapkan lahan/pot dan kompos dasar'],[c.sd,'Pindah tanam ke lahan'],[c.sd+3,'Cek bibit layu dan sulam']);}
+for(let d=c.sd+7,i=0;d<c.pn-5;d+=10,i++)t.push([d,i%2?'Cek hama di balik daun, siram merata':'Beri pupuk cair']);
+c.ex.forEach(x=>t.push(x));
+t.push([c.pn-5,'Cek tanda siap panen'],[c.pn,'Panen perdana 🎉']);
+return t.sort((a,b)=>a[0]-b[0]).map(([d,x])=>({d,x}));}
+function render(){document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.v===(view==='crop'?'home':view)?'page':'false'));
+const a=$('#app');a.innerHTML=view==='home'?home():view==='crop'?crop():view==='garden'?garden():view==='pupuk'?pupuk():tips();window.scrollTo(0,0);bind();}
+function home(){return `<div class="hero"><h1>Kebun Teduh</h1><p>Teman tenang untuk petani pemula: semai, rawat, lalu panen.</p>
+<svg class="hill" viewBox="0 0 400 70" preserveAspectRatio="none"><path d="M0 50C60 20 120 60 200 35S340 15 400 40V70H0z" fill="var(--ac2)" opacity=".5"/><path d="M0 60C80 40 150 65 240 50S360 40 400 55V70H0z" fill="var(--ac)" opacity=".6"/></svg></div>
+<div class="grid">${C.map(c=>`<button class="crop" data-c="${c.id}"><span class="ico"><span class="sway">${c.e}</span></span><b>${c.n}</b><small>${c.tg}</small><span class="pill">${c.lv} · ±${c.hr} hari</span></button>`).join('')}</div>`}
+function crop(){const c=C.find(x=>x.id===cur),T=['Semai','Rawat','Panen','Masalah'];
+const body=tab==0?`<ol>${c.sem.map(s=>`<li>${s}</li>`).join('')}</ol>`:tab==1?`<ul>${c.rw.map(s=>`<li>${s}</li>`).join('')}</ul>`:tab==2?`<ul>${c.pa.map(s=>`<li>${s}</li>`).join('')}</ul>`:c.ms.map(m=>`<p style="margin:10px 0"><b>${m[0]}</b><br>${m[1]}</p>`).join('');
+return `<button class="back" data-b>‹ Semua tanaman</button><div class="row" style="justify-content:flex-start;gap:14px"><span class="ico" style="width:64px;height:64px;font-size:36px">${c.e}</span><div><h2>${c.n}</h2><small style="color:var(--mut)">${c.tg}</small></div></div>
+<div class="facts"><div><b>${c.sun}</b>sinar/hari</div><div><b>${c.j}</b>jarak tanam</div><div><b>${c.hr} hari</b>panen</div></div>
+<div class="tabs" role="tablist">${T.map((t,i)=>`<button role="tab" aria-selected="${i==tab}" data-t="${i}">${t}</button>`).join('')}</div>
+<div class="card">${body}</div><button class="btn o" data-go="pupuk">Lihat dosis pupuk dan diagnosa masalah</button>
+<div class="card"><h3>Mulai tanam ${c.n}</h3><label for="dt" style="color:var(--mut);font-size:14px">Tanggal ${c.sd?'semai':'tanam'}</label>
+<input id="dt" type="date" value="${new Date().toISOString().slice(0,10)}"><input id="nm" placeholder="Nama (mis. Pot teras)" maxlength="30">
+<button class="btn" data-add="${c.id}">Tambah ke Kebunku</button></div>`}
+function garden(){if(!G.length)return `<div class="hero"><h1>Kebunku</h1></div><div class="empty card">🌱<br>Belum ada tanaman. Buka satu tanaman, lalu tekan “Tambah ke Kebunku” untuk membuat jadwal otomatis.<button class="btn" data-go="home">Pilih tanaman</button></div>`;
+const t0=today();let out='<div class="hero"><h1>Kebunku</h1><p>Centang tugas yang sudah selesai.</p></div>';
+G.forEach((g,gi)=>{const c=C.find(x=>x.id===g.c),ts=tasks(c),start=new Date(g.s),age=Math.floor((t0-start)/D),pc=Math.max(0,Math.min(100,Math.round(age/c.pn*100)));
+const nxt=ts.find((t,i)=>!g.d.includes(i));
+out+=`<div class="card"><div class="row"><h3>${c.e} ${g.n||c.n}</h3><button class="del" data-del="${gi}">Hapus</button></div>
+<small style="color:var(--mut)">${c.n} · mulai ${fmt(start)} · hari ke-${Math.max(age,0)} dari ±${c.pn}</small><div class="bar"><i style="width:${pc}%"></i></div>
+${nxt?`<small>Berikutnya: <b>${nxt.x}</b> (${fmt(+start+nxt.d*D)})</small>`:'<small>Semua tugas selesai. Selamat! 🎉</small>'}
+<details style="margin-top:8px"><summary style="cursor:pointer;color:var(--ac);font-weight:700">Semua tugas (${g.d.length}/${ts.length})</summary>
+${ts.map((t,i)=>{const dt=+start+t.d*D,done=g.d.includes(i),late=!done&&dt<+t0;return `<label class="task ${done?'done':''} ${late?'late':''}"><input type="checkbox" data-k="${gi}:${i}" ${done?'checked':''}><span>${t.x}<em>${fmt(dt)}${late?' · terlewat':''}${dt==+t0?' · hari ini':''}</em></span></label>`}).join('')}</details></div>`});
+return out}
+function tips(){return `<div class="hero"><h1>Dasar Berkebun</h1><p>Sebelum mulai, siapkan hal-hal sederhana ini.</p></div>
+<div class="card"><h3>🪴 Alat awal</h3><ul><li>Pot/polybag 30 cm atau bedengan 1 m</li><li>Tray semai, sekop kecil, gembor/penyemprot</li><li>Kompos, sekam bakar, pupuk cair organik</li><li>Ajir bambu dan tali (tomat, lombok, terong)</li></ul></div>
+<div class="card"><h3>🌱 Media tanam sehat</h3><p>Campur tanah, kompos matang, dan sekam bakar 1:1:1. Gembur, mengalirkan air, dan kaya hara.</p></div>
+<div class="card"><h3>💧 Cara siram</h3><p>Tes dengan jari: tusuk 2 cm, jika kering baru siram. Siram pagi (6–9) di pangkal tanaman. Sayur daun butuh lebih sering, cabai dan terong lebih toleran.</p></div>
+<div class="card"><h3>☀️ Sinar</h3><p>Sayur daun (selada, pakcoy, seledri, kangkung): 4–6 jam. Tomat, lombok, terong: 6–8 jam.</p></div>
+<div class="card"><h3>🌧️ Musim hujan</h3><p>Kangkung, pakcoy, dan seledri senang air. Tomat dan lombok rawan jamur: beri atap plastik transparan dan jarak tanam lega.</p></div>
+<div class="card"><h3>🔁 Rotasi</h3><p>Jangan tanam terong–tomat–lombok (satu keluarga) berturut-turut di tanah sama. Selingi dengan kangkung atau pakcoy.</p></div>`}
+const DX=[
+['Daun tua kuning merata, tanaman pucat dan kerdil','Kurang nitrogen (N). Daun tua menguning lebih dulu karena N dipindah ke daun muda.','Siram POC 20 ml/L atau NPK ±2 g (½ sdt) per tanaman, lalu siram air. Cek lagi 5–7 hari.',1],
+['Daun tua kuning, tulang daun tetap hijau','Kurang magnesium (Mg). Bisa juga karena kalium berlebihan menghambat Mg.','Taburkan dolomit 1 sdm/pot atau siram garam Inggris (MgSO4) 1 sdt/L. Jangan pupuk N dan K sekaligus terlalu banyak.',1],
+['Daun muda coklat/busuk, ujung buah hitam (busuk ujung), bunga rontok','Kurang kalsium (Ca). Penyebab: tanah kering, akar lemah, atau N berlebihan yang menghalangi serapan Ca.','Siram teratur dan konsisten, beri dolomit/cangkang telur halus, kurangi N. Buang buah yang sudah busuk.',1],
+['Tepi daun kuning lalu coklat kering','Kurang kalium (K).','Beri pupuk tinggi K (MKP/KCl sesuai label) atau abu sekam. Penting saat tomat/lombok berbunga.',1],
+['Daun ungu atau hijau sangat gelap, akar kerdil','Kurang fosfor (P), sering saat tanah dingin atau pH tidak pas.','Beri NPK seimbang 16-16-16, cek pH tanah.',1],
+['Daun kuning, tanah becek, layu siang hari','Siram berlebihan atau drainase buruk; akar lemas kekurangan oksigen.','Kurangi siram, pastikan pot berlubang, gemburkan media. Tes jari sebelum menyiram.',0],
+['Daun muda kuning tapi pembuluh hijau, semua pupuk sudah cukup','pH tanah terlalu tinggi atau rendah sehingga hara terkunci. Sayuran umumnya nyaman pada pH 6,0–6,5.','Ukur pH dengan kertas lakmus/pH meter murah. Asam: beri dolomit. Basa: tambah kompos.',1],
+['Daun bolong-bolong','Ulat, kumbang, belalang, atau siput. Lubang tidak beraturan = ulat; tepi dimakan, ada lendir = siput.','Periksa balik daun pagi dan malam, petik manual, pasang jaring, semprot air sabun 1 sdt/L atau neem. Bersihkan gulma dekat tanaman.',0],
+['Daun keriting/menggulung, ada serangga kecil putih','Thrips, kutu kebul, atau tungau (sering pada lombok/tomat).','Perangkap kuning, semprot air sabun tiap 3 hari. Daun keriting kuning dan mengecil dengan cepat = curiga virus: cabut dan buang.',0],
+['Bercak coklat, cincin, atau bercak basah','Jamur atau bakteri, naik di musim hujan.','Buang daun sakit, siram di pangkal saja, beri jarak, pakai atap plastik. Gunakan fungisida sesuai label bila parah.',0],
+['Layu tidak pulih meski sudah disiram, batang berlendir','Layu bakteri (tomat, terong, lombok).','Cabut dan buang tanaman (jangan dikompos); ganti media. Jangan tanam keluarga yang sama di tempat itu lagi.',0],
+['Daun lebat tapi sedikit bunga/buah','Nitrogen berlebihan.','Hentikan pupuk N/POC daun, ganti pupuk tinggi K dan P.',1],
+['Bunga ada, buah tidak jadi','Suhu terlalu panas, hujan terus, atau bunga tidak terserbuki.','Goyang tangkai bunga tiap pagi, beri naungan siang, jaga siram teratur.',1]];
+const SRC=[['Kementan – JICA, Gejala kekurangan hara dan pH 6,0–6,5 (tomat)','https://data.hortikultura.pertanian.go.id/jica/Materials/Chapter%205/5-9.pdf'],['BALITSA/JIRCAS – dosis pupuk standar sayuran','https://www.jircas.go.jp/sites/default/files/2020/20200910.pdf'],['Rekomendasi NPK tomat (50-75-75 kg/ha), Neliti','https://media.neliti.com/media/publications/81816-none-9bf93fab.pdf'],['POC 20 ml/L untuk selada, Jurnal AgrotekMAS (UMI) 2021','https://jurnal.fp.umi.ac.id/index.php/agrotekmas/article/download/212/186'],['POC bawang merah 100–200 ml untuk tomat, Unitri','https://eprints.unitri.ac.id/id/eprint/66/2/BAB%20I.pdf'],['Cara membuat POC dan kekurangannya, detikBali','https://www.detik.com/bali/berita/d-7361097/cara-membuat-pupuk-organik-cair-kelebihan-dan-kekurangannya'],['Ciri kekurangan Ca, Mg, S, GNFI','https://www.goodnewsfromindonesia.id/network/content/ciri-tanaman-kekurangan-unsur-hara-kalsium-magnesium-dan-sulfur-Xxhxg0']];
+function pupuk(){const s=(v)=>`<span class="src ${v?'':'p'}">${v?'✅ rujukan':'🧭 perkiraan'}</span>`;
+return `<div class="hero"><h1>Pupuk dan Masalah Tanaman</h1><p>✅ ada rujukan, 🧭 perkiraan praktis. Jika ada label di kemasan, ikuti label.</p></div>
+<div class="card"><h3>Aturan emas</h3><ul><li>Pupuk sedikit tapi sering lebih aman daripada banyak sekali. Kelebihan pupuk membakar akar.</li><li>Siram dulu, baru pupuk; siram lagi setelah menabur pupuk kering. ${s(0)}</li><li>Tabur melingkar ±10 cm dari pangkal, jangan menempel batang atau daun.</li><li>Tanah dijaga pH 6,0–6,5 ${s(1)}</li><li>1 sendok teh munjung ≈ 5 g, 1 sendok makan ≈ 15 g.</li></ul></div>
+<div class="card"><h3>Dosis per tanaman</h3>
+<details class="fx" open><summary>🥬 Selada, pakcoy, seledri, kangkung</summary><table><tr><td>Dasar</td><td>Kompos/pupuk kandang matang 1–2 kg/m² dicampur tanah ${s(0)}</td></tr><tr><td>Susulan</td><td>POC encer 20 ml/L air, siram 100–200 ml/tanaman tiap 7–10 hari ${s(1)}</td></tr><tr><td>Tambahan</td><td>NPK 16-16-16 ±2 g (½ sdt) per tanaman, 1× umur 10–14 hari bila daun pucat ${s(0)}</td></tr><tr><td>Catatan</td><td>Kangkung: pupuk lagi setelah tiap panen potong. Seledri: tiap 10 hari, tanah harus lembap.</td></tr></table></details>
+<details class="fx"><summary>🍅🌶️🍆 Tomat, lombok, terong</summary><table><tr><td>Dasar</td><td>Kompos/pupuk kandang matang 1 kg per lubang/pot 30 cm. Dolomit 1 sdm bila tanah asam, diamkan 1 minggu ${s(0)}</td></tr><tr><td>Fase daun (0–5 minggu)</td><td>NPK 16-16-16 ±5 g (1 sdt munjung) per tanaman tiap 10–14 hari + POC 20 ml/L tiap 7 hari ${s(0)}</td></tr><tr><td>Fase bunga/buah</td><td>Kurangi N. NPK ±5 g tiap 10–14 hari atau pupuk tinggi K sesuai label. Tomat: POC 100–200 ml per aplikasi ${s(1)}</td></tr><tr><td>Stop</td><td>Hentikan pupuk N 1–2 minggu sebelum panen besar.</td></tr></table>
+<p class="note">Angka NPK per tanaman dihitung dari rekomendasi lapangan tomat (50 N, 75 P₂O₅, 75 K₂O kg/ha) lalu dibagi populasi tanaman dan 3–4 kali aplikasi. Itu pendekatan, bukan angka resmi per pot.</p></details></div>
+<div class="card"><h3>Cara membuat POC sendiri</h3><p><b>Bahan</b> (ember 10 L bertutup): 1 kg sisa sayur/buah dicacah, 1 kg batang pisang cacah (opsional), 200 g gula merah, 15–20 ml EM4 (atau air cucian beras), air bersih secukupnya ${s(1)}</p>
+<ol><li>Larutkan gula merah dalam air, campur EM4.</li><li>Masukkan cacahan ke ember, tuang larutan hingga terendam.</li><li>Tutup, longgarkan tutup tiap 1–2 hari untuk melepas gas, aduk pelan.</li><li>Fermentasi ±2 minggu (🧭). Matang bila berbau seperti tape, bukan busuk.</li><li>Saring, simpan dalam botol ber-ventilasi di tempat teduh.</li></ol>
+<p><b>Pakai:</b> 20 ml per 1 L air, siram ke tanah tiap 1–2 minggu. Mulai dari encer, tingkatkan bila tanaman tidak bereaksi buruk. ${s(1)}</p>
+<p class="note">Hindari daging, minyak, santan, dan makanan sangat asin. POC buatan sendiri kadar haranya tidak pasti dan mikroorganismenya cepat mati, jadi anggap sebagai pelengkap kompos, bukan pengganti pupuk utama.</p>
+<p class="note"><b>Gagal:</b> bau busuk menyengat atau belatung banyak → buang di tanah jauh dari tanaman, mulai ulang dengan gula lebih banyak.</p></div>
+<div class="card"><h3>Diagnosa masalah</h3>${DX.map(d=>`<details class="fx"><summary>${d[0]}</summary><p><b>Penyebab:</b> ${d[1]}</p><p><b>Solusi:</b> ${d[2]} ${s(d[3])}</p></details>`).join('')}
+<p class="note">Gejala sering mirip. Lihat tiga hal: daun tua atau muda, pola pada daun, dan keadaan tanah (basah/kering).</p></div>
+<div class="card"><h3>Sumber</h3><ul>${SRC.map(x=>`<li><a href="${x[1]}" target="_blank" rel="noopener">${x[0]}</a></li>`).join('')}</ul><p class="note">Angka lapangan (kg/ha) berlaku untuk kebun luas. Untuk pot/bedengan rumah, gunakan tabel di atas dan sesuaikan dengan reaksi tanaman.</p></div>`}
+function bind(){document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cur=b.dataset.c;tab=0;view='crop';render()});
+document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tab=+b.dataset.t;render();window.scrollTo(0,200)});
+const bk=$('[data-b]');if(bk)bk.onclick=()=>{view='home';render()};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{view=b.dataset.go;render()});
+const ad=$('[data-add]');if(ad)ad.onclick=()=>{G.push({c:cur,s:$('#dt').value,n:$('#nm').value.trim(),d:[]});save();view='garden';render()};
+document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Hapus tanaman ini dari Kebunku?')){G.splice(+b.dataset.del,1);save();render()}});
+document.querySelectorAll('[data-k]').forEach(b=>b.onchange=()=>{const[gi,i]=b.dataset.k.split(':').map(Number),d=G[gi].d,p=d.indexOf(i);p>-1?d.splice(p,1):d.push(i);save();const o=document.querySelectorAll('details')[gi]?.open;render();if(o)document.querySelectorAll('details')[gi].open=true;})}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;render()});
+render();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script></body></html>
