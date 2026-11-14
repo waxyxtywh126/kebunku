@@ -51,6 +51,7 @@ input,select{width:100%;padding:12px;border-radius:14px;border:1px solid var(--b
 nav{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--sf) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--bd);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));gap:6px}
 nav button{flex:1;max-width:160px;background:none;border:0;color:var(--mut);font:inherit;font-size:12px;font-weight:700;padding:6px;border-radius:16px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button[aria-current=page]{color:var(--ac);background:var(--sf2)}nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}.chip{border:1px solid var(--bd);background:var(--sf2);color:var(--tx);border-radius:99px;padding:8px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.chip:active{background:var(--ac2)}.stat{font-size:13px;color:var(--mut)}.warn{background:var(--sa)}nav button{font-size:11px!important;padding:6px 2px!important}
 details.fx{border-top:1px solid var(--bd);padding:8px 0}details.fx summary{cursor:pointer;font-weight:700;padding:6px 0}details.fx p,details.fx ul{margin:6px 0;font-size:15px}
 .src{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--sf2);margin-left:4px}.src.p{background:var(--sa)}
 a{color:var(--ac)}.note{font-size:13px;color:var(--mut)}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:7px 4px;border-top:1px solid var(--bd);vertical-align:top}
@@ -62,6 +63,7 @@ a{color:var(--ac)}.note{font-size:13px;color:var(--mut)}table{width:100%;border-
 <button data-v="home"><svg viewBox="0 0 24 24"><path d="M12 21V11M12 11C12 7 9 5 5 5c0 4 2 6 7 6zM12 14c0-3 2-5 6-5 0 3-2 5-6 5z"/></svg>Tanaman</button>
 <button data-v="garden"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 20c0-5 3-8 6-8s6 3 6 8M12 12V6m0 0c-2 0-3-1-3-3 2 0 3 1 3 3zm0 0c2 0 3-1 3-3-2 0-3 1-3 3z"/></svg>Kebunku</button>
 <button data-v="pupuk"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 5 6.500 5 9.500a5 5 0 0 1-10 0C7 9.500 9 7 12 3zM9.500 13.500a2.500 2.500 0 0 0 2.500 2.500"/></svg>Pupuk</button>
+<button data-v="alat"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M8.500 7.500h7M8.500 12h1M12 12h1M15 12h.5M8.500 16h1M12 16h1M15 16h.5"/></svg>Alat</button>
 <button data-v="tips"><svg viewBox="0 0 24 24"><path d="M12 3c-3.3 0-6 2.5-6 5.7 0 2 1 3.3 2 4.3.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5 1-1 2-2.300 2-4.300C18 5.500 15.300 3 12 3zM10 20h4M10.500 17.500h3"/></svg>Dasar</button>
 </nav>
 <script>
@@ -106,6 +108,7 @@ ms:[['Kutu daun dan ulat','Semprot air sabun atau neem, petik manual.'],['Layu b
 ex:[[36,'Pasang ajir'],[45,'Pangkas tunas bawah'],[55,'Pupuk NPK']]}];
 const $=s=>document.querySelector(s);let view='home',cur=null,tab=0;
 let G=[];try{G=JSON.parse(localStorage.getItem('kebun')||'[]')}catch(e){}
+G.forEach(g=>{g.id=g.id||Math.random().toString(36).slice(2)});
 const save=()=>{try{localStorage.setItem('kebun',JSON.stringify(G))}catch(e){}};
 const D=864e5,today=()=>new Date(new Date().toDateString());
 const fmt=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'short'});
@@ -116,8 +119,8 @@ for(let d=c.sd+7,i=0;d<c.pn-5;d+=10,i++)t.push([d,i%2?'Cek hama di balik daun, s
 c.ex.forEach(x=>t.push(x));
 t.push([c.pn-5,'Cek tanda siap panen'],[c.pn,'Panen perdana 🎉']);
 return t.sort((a,b)=>a[0]-b[0]).map(([d,x])=>({d,x}));}
-function render(){document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.v===(view==='crop'?'home':view)?'page':'false'));
-const a=$('#app');a.innerHTML=view==='home'?home():view==='crop'?crop():view==='garden'?garden():view==='pupuk'?pupuk():tips();window.scrollTo(0,0);bind();}
+function render(){document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.v===(view==='crop'?'home':view==='tl'?'garden':view)?'page':'false'));
+const a=$('#app');a.innerHTML=view==='home'?home():view==='crop'?crop():view==='garden'?garden():view==='pupuk'?pupuk():view==='alat'?alat():view==='tl'?tlv():tips();window.scrollTo(0,0);bind();}
 function home(){return `<div class="hero"><h1>Kebun Teduh</h1><p>Teman tenang untuk petani pemula: semai, rawat, lalu panen.</p>
 <svg class="hill" viewBox="0 0 400 70" preserveAspectRatio="none"><path d="M0 50C60 20 120 60 200 35S340 15 400 40V70H0z" fill="var(--ac2)" opacity=".5"/><path d="M0 60C80 40 150 65 240 50S360 40 400 55V70H0z" fill="var(--ac)" opacity=".6"/></svg></div>
 <div class="grid">${C.map(c=>`<button class="crop" data-c="${c.id}"><span class="ico"><span class="sway">${c.e}</span></span><b>${c.n}</b><small>${c.tg}</small><span class="pill">${c.lv} · ±${c.hr} hari</span></button>`).join('')}</div>`}
@@ -131,13 +134,13 @@ return `<button class="back" data-b>‹ Semua tanaman</button><div class="row" s
 <input id="dt" type="date" value="${new Date().toISOString().slice(0,10)}"><input id="nm" placeholder="Nama (mis. Pot teras)" maxlength="30">
 <button class="btn" data-add="${c.id}">Tambah ke Kebunku</button></div>`}
 function garden(){if(!G.length)return `<div class="hero"><h1>Kebunku</h1></div><div class="empty card">🌱<br>Belum ada tanaman. Buka satu tanaman, lalu tekan “Tambah ke Kebunku” untuk membuat jadwal otomatis.<button class="btn" data-go="home">Pilih tanaman</button></div>`;
-const t0=today();let out='<div class="hero"><h1>Kebunku</h1><p>Centang tugas yang sudah selesai.</p></div>';
+const t0=today();let out='<div class="hero"><h1>Kebunku</h1><p>Centang tugas dan catat kegiatan harianmu.</p></div>'+hariIni(t0);
 G.forEach((g,gi)=>{const c=C.find(x=>x.id===g.c),ts=tasks(c),start=new Date(g.s),age=Math.floor((t0-start)/D),pc=Math.max(0,Math.min(100,Math.round(age/c.pn*100)));
 const nxt=ts.find((t,i)=>!g.d.includes(i));
 out+=`<div class="card"><div class="row"><h3>${c.e} ${g.n||c.n}</h3><button class="del" data-del="${gi}">Hapus</button></div>
-<small style="color:var(--mut)">${c.n} · mulai ${fmt(start)} · hari ke-${Math.max(age,0)} dari ±${c.pn}</small><div class="bar"><i style="width:${pc}%"></i></div>
+<small style="color:var(--mut)">${c.n} · mulai ${fmt(start)} · hari ke-${Math.max(age,0)+1} dari ±${c.pn}</small><div class="bar"><i style="width:${pc}%"></i></div>
 ${nxt?`<small>Berikutnya: <b>${nxt.x}</b> (${fmt(+start+nxt.d*D)})</small>`:'<small>Semua tugas selesai. Selamat! 🎉</small>'}
-<details style="margin-top:8px"><summary style="cursor:pointer;color:var(--ac);font-weight:700">Semua tugas (${g.d.length}/${ts.length})</summary>
+${logUI(g,gi)}<details class="tl" style="margin-top:8px"><summary style="cursor:pointer;color:var(--ac);font-weight:700">Semua tugas (${g.d.length}/${ts.length})</summary>
 ${ts.map((t,i)=>{const dt=+start+t.d*D,done=g.d.includes(i),late=!done&&dt<+t0;return `<label class="task ${done?'done':''} ${late?'late':''}"><input type="checkbox" data-k="${gi}:${i}" ${done?'checked':''}><span>${t.x}<em>${fmt(dt)}${late?' · terlewat':''}${dt==+t0?' · hari ini':''}</em></span></label>`}).join('')}</details></div>`});
 return out}
 function tips(){return `<div class="hero"><h1>Dasar Berkebun</h1><p>Sebelum mulai, siapkan hal-hal sederhana ini.</p></div>
@@ -174,16 +177,91 @@ return `<div class="hero"><h1>Pupuk dan Masalah Tanaman</h1><p>✅ ada rujukan, 
 <p><b>Pakai:</b> 20 ml per 1 L air, siram ke tanah tiap 1–2 minggu. Mulai dari encer, tingkatkan bila tanaman tidak bereaksi buruk. ${s(1)}</p>
 <p class="note">Hindari daging, minyak, santan, dan makanan sangat asin. POC buatan sendiri kadar haranya tidak pasti dan mikroorganismenya cepat mati, jadi anggap sebagai pelengkap kompos, bukan pengganti pupuk utama.</p>
 <p class="note"><b>Gagal:</b> bau busuk menyengat atau belatung banyak → buang di tanah jauh dari tanaman, mulai ulang dengan gula lebih banyak.</p></div>
-<div class="card"><h3>Diagnosa masalah</h3>${DX.map(d=>`<details class="fx"><summary>${d[0]}</summary><p><b>Penyebab:</b> ${d[1]}</p><p><b>Solusi:</b> ${d[2]} ${s(d[3])}</p></details>`).join('')}
+<div class="card"><h3>Diagnosa masalah</h3><input id="dq" type="search" placeholder="Cari gejala: kuning, bolong, layu..." aria-label="Cari gejala">${DX.map(d=>`<details class="fx" data-dx><summary>${d[0]}</summary><p><b>Penyebab:</b> ${d[1]}</p><p><b>Solusi:</b> ${d[2]} ${s(d[3])}</p></details>`).join('')}
 <p class="note">Gejala sering mirip. Lihat tiga hal: daun tua atau muda, pola pada daun, dan keadaan tanah (basah/kering).</p></div>
 <div class="card"><h3>Sumber</h3><ul>${SRC.map(x=>`<li><a href="${x[1]}" target="_blank" rel="noopener">${x[0]}</a></li>`).join('')}</ul><p class="note">Angka lapangan (kg/ha) berlaku untuk kebun luas. Untuk pot/bedengan rumah, gunakan tabel di atas dan sesuaikan dengan reaksi tanaman.</p></div>`}
+const IC={siram:'💧 Siram',pupuk:'🌿 Pupuk',hama:'🐛 Hama',panen:'🧺 Panen',catat:'📝 Catatan'};
+const SI={selada:1,pakcoy:1,seledri:1,kangkung:1,tomat:1,lombok:2,terong:2};
+function hariIni(t0){if(!G.length)return '';const r=[],sr=[],ft=[];G.forEach((g,gi)=>{const c=C.find(x=>x.id===g.c),st=new Date(g.s),nm=g.n||c.n;tasks(c).forEach((t,i)=>{const dt=+st+t.d*D;if(dt<=+t0&&!g.d.includes(i))r.push({gi,i,x:t.x,n:nm,e:c.e,late:dt<+t0})});
+if(+st<=+t0){const ls=[...(g.l||[])].reverse().find(x=>x.k==='siram');if(!ls||(+t0-new Date(ls.ts).setHours(0,0,0,0))/D>=SI[c.id])sr.push({gi,n:nm,e:c.e});if(!g.lp||Date.now()-g.lp>3*D)ft.push(nm)}});
+if(!r.length&&!sr.length&&!ft.length)return '<div class="card">✨ Semua beres hari ini.</div>';
+return `<div class="card warn"><h3>Hari ini</h3>${r.slice(0,8).map(t=>`<label class="task ${t.late?'late':''}"><input type="checkbox" data-k="${t.gi}:${t.i}"><span>${t.e} ${t.n}: ${t.x}${t.late?'<em>terlambat</em>':''}</span></label>`).join('')}${r.length>8?`<small>+${r.length-8} tugas lagi</small>`:''}${sr.length?`<div class="chips">${sr.map(x=>`<button class="chip" data-log="${x.gi}:siram">💧 Siram ${x.e} ${x.n}</button>`).join('')}</div><p class="note">🧭 Perkiraan menurut jenis tanaman. Tes jari tetap yang utama.</p>`:''}${ft.length?`<p class="note">📷 Waktunya foto progres: ${ft.join(', ')}</p>`:''}</div>`}
+function logUI(g,gi){const L=g.l||[],n=k=>L.filter(x=>x.k===k).length,gr=L.filter(x=>x.k==='panen').reduce((a,x)=>a+(+x.v||0),0),ls=[...L].reverse().find(x=>x.k==='siram'),ag=ls?Math.floor((Date.now()-ls.ts)/D):null;
+return `<div class="chips">${Object.keys(IC).map(k=>`<button class="chip" data-log="${gi}:${k}">${IC[k]}</button>`).join('')}${fotoChips(g,gi)}</div><div class="stat">💧 ${n('siram')} · 🌿 ${n('pupuk')} · 🐛 ${n('hama')} · 🧺 ${gr} g${ag===null?'':' · siram terakhir '+(ag?ag+' hari lalu':'hari ini')}</div>${L.length?`<details class="fx"><summary>Jurnal (${L.length})</summary>${L.slice(-12).reverse().map(x=>`<p>${fmt(x.ts)} · ${IC[x.k]} ${x.v?(x.k==='panen'?x.v+' g':x.v):''}</p>`).join('')}</details>`:''}`}
+function hitung(id,n){const c=C.find(x=>x.id===id),buah=['tomat','lombok','terong'].includes(id),[a,b]=c.j.match(/\d+/g).map(Number),m2=n*a*b/1e4,mg=Math.ceil((c.pn-c.sd)/7),poc=n*0.15*mg;
+const kompos=buah?n*1:m2*1.5,npk=buah?n*5*Math.ceil((c.pn-c.sd)/12):n*2,dol=buah?n*15:0;
+return `<ul><li>Luas bedeng ±<b>${m2.toFixed(1)} m²</b></li><li>Kompos/pupuk kandang dasar: <b>${kompos.toFixed(1)} kg</b></li>${dol?`<li>Dolomit (bila tanah asam): <b>${dol} g</b></li>`:''}<li>NPK 16-16-16 selama musim: <b>${npk} g</b> (±${Math.round(npk/5)} sendok teh)</li><li>Larutan POC selama ${mg} minggu: <b>${poc.toFixed(1)} L</b>, butuh konsentrat POC <b>${Math.ceil(poc*20)} ml</b> (20 ml/L)</li></ul><p class="note">🧭 Perkiraan dari tabel dosis di tab Pupuk. Sesuaikan dengan reaksi tanaman dan label produk.</p>`}
+function ring(){const L=G.flatMap(g=>g.l||[]),k=x=>L.filter(y=>y.k===x).length;return `Tanaman aktif: <b>${G.length}</b><br>💧 ${k('siram')} siram · 🌿 ${k('pupuk')} pupuk · 🐛 ${k('hama')} catatan hama<br>🧺 Total panen: <b>${L.filter(x=>x.k==='panen').reduce((a,x)=>a+(+x.v||0),0)} g</b>`}
+function alat(){return `<div class="hero"><h1>Alat Petani</h1><p>Kalkulator, kalender, dan cadangan data.</p></div>
+<div class="card"><h3>🧮 Kalkulator pupuk</h3><select id="kc" aria-label="Tanaman">${C.map(c=>`<option value="${c.id}">${c.e} ${c.n}</option>`).join('')}</select><input id="kn" type="number" inputmode="numeric" min="1" max="500" value="5" aria-label="Jumlah tanaman"><button class="btn" data-calc>Hitung kebutuhan</button><div id="kr"></div></div>
+<div class="card"><h3>📅 Ekspor ke Kalender</h3><p class="note">File .ics berisi siram harian, pupuk tiap 7 hari, dan semua tugas tanaman di Kebunku, lengkap dengan alarm.</p><button class="btn" data-ics>Unduh jadwal (.ics)</button></div>
+<div class="card"><h3>💾 Cadangan data</h3><p class="note">Data tersimpan di HP ini saja. Salin cadangan lalu simpan di Catatan.</p><button class="btn o" data-bk>Salin cadangan</button><button class="btn o" data-rs>Pulihkan dari cadangan</button></div>
+<div class="card"><h3>📊 Ringkasan kebun</h3>${ring()}${grafik()}</div>`}
+function buatICS(){const p=n=>String(n).padStart(2,'0'),f=d=>`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}T${p(d.getHours())}${p(d.getMinutes())}00`,t0=today(),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kebun Teduh//ID','CALSCALE:GREGORIAN'],st=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';let u=0;
+const ev=(dt,sum,rr)=>{L.push('BEGIN:VEVENT','UID:kebun'+(u++)+'-'+st+'@kebunteduh','DTSTAMP:'+st,'DTSTART:'+f(dt),'DTEND:'+f(new Date(+dt+18e5)),'SUMMARY:'+sum.replace(/[,;]/g,' '));if(rr)L.push('RRULE:'+rr);L.push('BEGIN:VALARM','TRIGGER:PT0M','ACTION:DISPLAY','DESCRIPTION:'+sum.replace(/[,;]/g,' '),'END:VALARM','END:VEVENT')};
+const at=(d,h,m)=>new Date(d.getFullYear(),d.getMonth(),d.getDate(),h,m);
+ev(at(t0,7,0),'Siram tanaman (pagi)','FREQ=DAILY');ev(at(t0,16,30),'Siram sayur daun (sore)','FREQ=DAILY');ev(at(new Date(+t0+D),7,30),'Beri pupuk','FREQ=DAILY;INTERVAL=7');
+G.forEach(g=>{const c=C.find(x=>x.id===g.c),st=new Date(g.s);tasks(c).forEach(t=>{const d=new Date(+st+t.d*D);if(+d>=+t0)ev(at(d,8,0),(g.n||c.n)+': '+t.x)})});
+L.push('END:VCALENDAR');const bl=new Blob([L.join('\r\n')],{type:'text/calendar'}),a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='kebun-teduh.ics';document.body.appendChild(a);a.click();a.remove()}
+let DBP;const db=()=>DBP||(DBP=new Promise((res,rej)=>{const r=indexedDB.open('kebun',1);r.onupgradeneeded=()=>r.result.createObjectStore('ph',{keyPath:'id',autoIncrement:true}).createIndex('pid','pid');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
+const tx=async(m,f)=>{const d=await db();return new Promise((res,rej)=>{const t=d.transaction('ph',m),q=f(t.objectStore('ph'));t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)})};
+const phAdd=(pid,ts,blob)=>tx('readwrite',s=>s.add({pid,ts,blob}));
+const phList=pid=>tx('readonly',s=>s.index('pid').getAll(pid)).then(a=>(a||[]).sort((x,y)=>x.ts-y.ts));
+const phDel=id=>tx('readwrite',s=>s.delete(id));
+async function shrink(f){let bm;try{bm=await createImageBitmap(f)}catch(e){const im=new Image();im.src=URL.createObjectURL(f);await im.decode();bm=im}
+const w=bm.width||bm.naturalWidth,h=bm.height||bm.naturalHeight,sc=Math.min(1,960/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*sc);c.height=Math.round(h*sc);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,'image/jpeg',.82))}
+const fotoChips=(g,gi)=>`<label class="chip">📷 Foto<input type="file" accept="image/*" multiple hidden data-ph="${gi}"></label><button class="chip" data-tl="${gi}">🎞️ Timelapse${g.np?' ('+g.np+')':''}</button>`;
+let TL=null;
+async function openTL(gi){const g=G[gi],ph=await phList(g.id);TL={gi,ph,bm:await Promise.all(ph.map(p=>createImageBitmap(p.blob))),th:ph.map(p=>URL.createObjectURL(p.blob))};view='tl';render()}
+function tlv(){const g=G[TL.gi],c=C.find(x=>x.id===g.c),n=TL.ph.length,st=+new Date(g.s);
+return `<button class="back" data-bg>‹ Kebunku</button><h2>🎞️ Timelapse ${g.n||c.n}</h2>
+<div class="card"><canvas id="cv" width="720" height="960" style="width:100%;border-radius:16px;background:var(--sf2)"></canvas>
+<div class="row" style="margin-top:8px"><span class="stat">${n} foto</span><select id="sp" style="width:auto;margin:0" aria-label="Kecepatan"><option value="1500">Lambat</option><option value="900" selected>Sedang</option><option value="450">Cepat</option></select></div>
+<button class="btn" data-play ${n<2?'disabled':''}>▶ Putar</button><button class="btn o" data-rec ${n<2?'disabled':''}>🎬 Buat video</button><div id="vo"></div>
+${n<2?'<p class="note">Tambahkan minimal 2 foto lewat tombol 📷 Foto di Kebunku. Ambil dari sudut dan jarak yang sama tiap 1–3 hari.</p>':''}</div>
+<div class="card"><h3>Foto (${n})</h3><p class="note">Ketuk foto untuk menghapus.</p><div class="chips" style="gap:8px">${TL.ph.map((p,i)=>`<button class="chip" data-pd="${i}" style="padding:3px;border-radius:12px"><img src="${TL.th[i]}" width="64" height="80" alt="Foto hari ke-${Math.max(0,Math.floor((p.ts-st)/D))+1}" style="object-fit:cover;border-radius:10px;display:block"><small>H${Math.max(0,Math.floor((p.ts-st)/D))+1}</small></button>`).join('')}</div></div>`}
+function cover(cx,bm,al){const s=Math.max(720/bm.width,960/bm.height),w=bm.width*s,h=bm.height*s;cx.globalAlpha=al;cx.drawImage(bm,(720-w)/2,(960-h)/2,w,h);cx.globalAlpha=1}
+function overlay(cx,i){const g=G[TL.gi],c=C.find(x=>x.id===g.c),p=TL.ph[i],n=TL.ph.length,d=Math.max(0,Math.floor((p.ts-new Date(g.s))/D))+1,pn=(g.l||[]).find(x=>x.k==='panen'),pan=pn&&p.ts>=pn.ts;
+cx.fillStyle='rgba(20,29,24,.6)';cx.fillRect(0,820,720,140);cx.fillStyle='#fff';cx.font='700 46px Georgia,serif';cx.fillText('Hari ke-'+d+(pan?'  🧺 Panen':''),30,880);
+cx.font='28px system-ui,sans-serif';cx.fillStyle='#d9e8dc';cx.fillText(c.e+' '+(g.n||c.n)+' · '+new Date(p.ts).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}),30,925);
+cx.fillStyle='#8fcaa2';cx.fillRect(0,950,720*(i+1)/n,10)}
+function run(rec){return new Promise(res=>{const cv=$('#cv'),cx=cv.getContext('2d'),n=TL.bm.length,dur=+$('#sp').value,T=n*dur;let mr,ch=[];
+if(rec){const ty=['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t));if(!ty){res(null);return}
+mr=new MediaRecorder(cv.captureStream(30),{mimeType:ty,videoBitsPerSecond:4e6});mr.ondataavailable=e=>e.data.size&&ch.push(e.data);mr.onstop=()=>res(new Blob(ch,{type:ty.split(';')[0]}));mr.start()}
+const t0=performance.now(),step=now=>{const t=Math.min(now-t0,T-1),i=Math.floor(t/dur),f=(t-i*dur)/dur;cx.fillStyle='#000';cx.fillRect(0,0,720,960);cover(cx,TL.bm[i],1);if(i<n-1&&f>.75)cover(cx,TL.bm[i+1],(f-.75)*4);overlay(cx,f>.9&&i<n-1?i+1:i);
+if(now-t0<T)requestAnimationFrame(step);else if(mr)setTimeout(()=>mr.stop(),400);else res(null)};requestAnimationFrame(step)})}
+function still(i){const cx=$('#cv').getContext('2d');cx.fillStyle='#000';cx.fillRect(0,0,720,960);cover(cx,TL.bm[i],1);overlay(cx,i)}
+function grafik(){const a=G.map(g=>({n:g.n||C.find(x=>x.id===g.c).n,v:(g.l||[]).filter(x=>x.k==='panen').reduce((s,x)=>s+(+x.v||0),0)})).filter(x=>x.v>0);if(!a.length)return '<p class="note">Belum ada catatan panen. Tekan 🧺 Panen di Kebunku.</p>';const m=Math.max(...a.map(x=>x.v)),h=22;
+return `<svg viewBox="0 0 320 ${a.length*(h+8)}" style="width:100%;margin-top:8px" role="img" aria-label="Grafik hasil panen">${a.map((x,i)=>`<text x="0" y="${i*(h+8)+15}" font-size="11" fill="var(--mut)">${x.n.slice(0,14)}</text><rect x="90" y="${i*(h+8)+2}" width="${Math.max(4,x.v/m*170)}" height="${h-4}" rx="6" fill="var(--ac)"/><text x="${96+x.v/m*170}" y="${i*(h+8)+15}" font-size="11" fill="var(--tx)">${x.v} g</text>`).join('')}</svg>`}
 function bind(){document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{cur=b.dataset.c;tab=0;view='crop';render()});
 document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{tab=+b.dataset.t;render();window.scrollTo(0,200)});
-const bk=$('[data-b]');if(bk)bk.onclick=()=>{view='home';render()};
+const bkb=$('[data-b]');if(bkb)bkb.onclick=()=>{view='home';render()};
+document.querySelectorAll('[data-ph]').forEach(b=>b.onchange=async()=>{const g=G[+b.dataset.ph],fs=[...b.files],lb=b.parentElement;let i=0;const t0=performance.now();document.querySelectorAll('[data-tl],[data-ph]').forEach(e=>e.disabled=true);
+for(const f of fs){lb.firstChild.textContent='⏳ '+(++i)+'/'+fs.length;try{const bl=await shrink(f),ts=f.lastModified||Date.now();await phAdd(g.id,ts,bl);g.np=(g.np||0)+1;g.lp=Math.max(g.lp||0,ts);save()}catch(e){alert('Foto ke-'+i+' gagal disimpan.')}}
+window.__phMs=Math.round(performance.now()-t0);render()});
+document.querySelectorAll('[data-tl]').forEach(b=>b.onclick=()=>openTL(+b.dataset.tl).catch(()=>alert('Gagal membuka timelapse.')));
+const bg=$('[data-bg]');if(bg)bg.onclick=()=>{view='garden';render()};
+if(view==='tl'&&TL&&TL.bm.length)still(0);
+const pl=$('[data-play]');if(pl)pl.onclick=async()=>{pl.disabled=true;await run(false);pl.disabled=false;still(TL.bm.length-1)};
+const rc=$('[data-rec]');if(rc)rc.onclick=async()=>{rc.disabled=true;rc.textContent='Merekam... jangan tutup layar';const bl=await run(true);rc.disabled=false;rc.textContent='🎬 Buat video';
+if(!bl){alert('Perekaman video belum didukung di versi iOS ini. Gunakan Putar lalu rekam layar.');return}
+const ext=bl.type.includes('mp4')?'mp4':'webm',f=new File([bl],'timelapse.'+ext,{type:bl.type}),u=URL.createObjectURL(bl);
+$('#vo').innerHTML=`<video src="${u}" controls playsinline loop style="width:100%;border-radius:16px;margin-top:10px"></video><button class="btn" id="sv">💾 Simpan / Bagikan</button><a class="btn o" style="display:block;text-align:center;text-decoration:none" href="${u}" download="timelapse.${ext}">Unduh file</a>`;
+$('#sv').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f]});else alert('Gunakan tombol Unduh file.')}catch(e){}}};
+document.querySelectorAll('[data-pd]').forEach(b=>b.onclick=async()=>{const p=TL.ph[+b.dataset.pd];if(!confirm('Hapus foto ini?'))return;await phDel(p.id);const g=G[TL.gi];g.np=Math.max(0,(g.np||1)-1);save();openTL(TL.gi)});
+document.querySelectorAll('[data-log]').forEach(b=>b.onclick=()=>{const[gi,k]=b.dataset.log.split(':');let v='';
+if(k==='panen'){v=prompt('Berat panen (gram):');if(v===null)return;v=parseFloat(String(v).replace(',','.'))||0;if(!v)return}
+else if(k==='catat'||k==='hama'){v=prompt(k==='hama'?'Hama atau gejala apa yang terlihat?':'Catatan:');if(v===null)return;v=v.trim().slice(0,120)}
+(G[+gi].l=G[+gi].l||[]).push({k,ts:Date.now(),v});save();render()});
+const dq=$('#dq');if(dq)dq.oninput=()=>{const q=dq.value.toLowerCase().trim();document.querySelectorAll('details[data-dx]').forEach(d=>{d.style.display=d.textContent.toLowerCase().includes(q)?'':'none'})};
+const cb=$('[data-calc]');if(cb)cb.onclick=()=>{const n=Math.max(1,Math.min(500,parseInt($('#kn').value)||1));$('#kr').innerHTML=hitung($('#kc').value,n)};
+const ib=$('[data-ics]');if(ib)ib.onclick=()=>{try{buatICS()}catch(e){alert('Gagal membuat file kalender.')}};
+const bk=$('[data-bk]');if(bk)bk.onclick=async()=>{const t=JSON.stringify(G);try{await navigator.clipboard.writeText(t);alert('Cadangan disalin. Tempel di Catatan.')}catch(e){prompt('Salin teks ini:',t)}};
+const rs=$('[data-rs]');if(rs)rs.onclick=()=>{const t=prompt('Tempel teks cadangan:');if(!t)return;try{const a=JSON.parse(t);if(!Array.isArray(a))throw 0;if(confirm('Ganti data sekarang dengan cadangan ('+a.length+' tanaman)?')){G=a;save();view='garden';render()}}catch(e){alert('Teks cadangan tidak valid.')}};
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{view=b.dataset.go;render()});
-const ad=$('[data-add]');if(ad)ad.onclick=()=>{G.push({c:cur,s:$('#dt').value,n:$('#nm').value.trim(),d:[]});save();view='garden';render()};
-document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Hapus tanaman ini dari Kebunku?')){G.splice(+b.dataset.del,1);save();render()}});
-document.querySelectorAll('[data-k]').forEach(b=>b.onchange=()=>{const[gi,i]=b.dataset.k.split(':').map(Number),d=G[gi].d,p=d.indexOf(i);p>-1?d.splice(p,1):d.push(i);save();const o=document.querySelectorAll('details')[gi]?.open;render();if(o)document.querySelectorAll('details')[gi].open=true;})}
+const ad=$('[data-add]');if(ad)ad.onclick=()=>{G.push({c:cur,s:$('#dt').value,n:$('#nm').value.trim(),d:[],id:Math.random().toString(36).slice(2)});save();view='garden';render()};
+document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Hapus tanaman ini dari Kebunku?')){const g=G.splice(+b.dataset.del,1)[0];phList(g.id).then(a=>a.forEach(p=>phDel(p.id))).catch(()=>{});save();render()}});
+document.querySelectorAll('[data-k]').forEach(b=>b.onchange=()=>{const[gi,i]=b.dataset.k.split(':').map(Number),d=G[gi].d,p=d.indexOf(i);p>-1?d.splice(p,1):d.push(i);save();const o=document.querySelectorAll('details.tl')[gi]?.open;render();if(o)document.querySelectorAll('details.tl')[gi].open=true;})}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;render()});
 render();
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
